@@ -5,14 +5,11 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
-
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @MappedSuperclass
-@EnableJpaAuditing
 @Getter
 @Setter
 public abstract class BaseClass {
@@ -27,27 +24,26 @@ public abstract class BaseClass {
     @LastModifiedDate
     private LocalDateTime modified;
 
+    @PrePersist
+    protected void onCreate() {
+        created = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        modified = LocalDateTime.now();
+    }
 
     @Override
-    public boolean equals(Object obj){
+    public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (obj == null || getClass() !=obj.getClass()) return false;
+        if (obj == null || getClass() != obj.getClass()) return false;
         BaseClass that = (BaseClass) obj;
         return Objects.equals(id, that.id);
     }
 
-    @PrePersist
-    @PreUpdate
-    public void prePersist(){
-        if (created == null){
-            created = LocalDateTime.now();
-        }else {
-            modified = LocalDateTime.now();
-        }
-    }
-
     @Override
-    public int hashCode(){
-        return id != null ? id.hashCode():0;
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 }

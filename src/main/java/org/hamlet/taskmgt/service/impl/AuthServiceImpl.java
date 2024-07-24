@@ -43,7 +43,7 @@ public class AuthServiceImpl implements AuthService {
                 .firstname(request.getFirstname())
                 .lastname(request.getLastname())
                 .dateOfBirth(request.getDateOfBirth())
-                .profilePic(request.getProfilePic())
+                .profilePic("https://res.cloudinary.com/dpfqbb9pl/image/upload/v1701260428/maleprofile_ffeep9.png")
                 .phoneNumber(request.getPhoneNumber())
                 .email(request.getEmail())
                 .password(request.getPassword())
@@ -53,8 +53,8 @@ public class AuthServiceImpl implements AuthService {
         UserEntity saveUser = userRepository.save(newUser);
         EmailDetails emailDetails = EmailDetails.builder()
                 .recipient(saveUser.getEmail())
-                .messageBody("ACCOUNT CREATION")
-                .subject("CONGRATULATION!!! Your account has been successfully created. "
+                .subject("ACCOUNT CREATION")
+                .messageBody("CONGRATULATION!!! Your account has been successfully created. "
                         + "\n Your Account Details: \n " + "Account Name : "
                 +saveUser.getFirstname()
                 +saveUser.getLastname())

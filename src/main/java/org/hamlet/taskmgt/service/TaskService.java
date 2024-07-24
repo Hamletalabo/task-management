@@ -1,32 +1,32 @@
 package org.hamlet.taskmgt.service;
 
 import org.hamlet.taskmgt.model.entity.Task;
+import org.hamlet.taskmgt.model.enums.Category;
+import org.hamlet.taskmgt.model.enums.PriorityLevel;
+import org.hamlet.taskmgt.model.enums.Status;
 import org.hamlet.taskmgt.payload.request.TaskRequest;
-import org.hamlet.taskmgt.payload.response.ApiResponse;
 import org.hamlet.taskmgt.payload.response.TaskResponse;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface TaskService {
 
+    List<Task> getAllTasks(String email);
+    List<TaskResponse> viewCompletedTasks(String email);
 
+    TaskResponse deleteTaskById(String email, Long taskId);
 
-    List<Task> getAllTask();
-    List<TaskResponse> viewCompletedTask(String email);
+    List<Task> findByCategory(String email, Category category);
 
-    void deleteTaskById(String email,Long taskId);
+    List<Task> findByCategoryAndStatus(String email, Category category, Status status);
 
-    List<Task> findByCategory(String email, String category);
+    List<Task> findByStatus(String email, Status status);
 
-    List<Task> findByCategoryAndStatus(String email, String category, String status);
+    List<Task> findByPriorityLevel(String email, PriorityLevel priorityLevel);
 
-    List<Task> findByStatus(String email, String status);
+    TaskResponse createTask(String email, TaskRequest taskRequest);
 
-    List<Task>findByPriorityLevel(String email, String priorityLeve);
+    TaskResponse updateTask(String email, Long taskId, TaskRequest taskRequest);
 
-    ResponseEntity<ApiResponse<TaskResponse>> createTask(String email, TaskRequest taskRequest);
-
-    ResponseEntity<ApiResponse<TaskResponse>> updateTask(String email, TaskRequest taskRequest);
-
+    TaskResponse toTaskResponse(Task task);
 }
